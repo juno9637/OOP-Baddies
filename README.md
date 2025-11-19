@@ -1,8 +1,8 @@
-# OOP-Baddies
-Infurate the user (we hate them)
+# *OOP-Baddies*
+- Infurate the user ~~(we hate them)~~
 
 
-### This cat was just here, I think it's trying to talk to you Saanika
+### This cat was just standing here. I think they're trying to talk to you Saanika
 
 <pre>
 ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣀⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
