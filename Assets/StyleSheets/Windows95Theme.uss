@@ -1,0 +1,656 @@
+/*
+ * Windows95Theme.uss
+ * 
+ * A complete Windows 95/98 style theme for Unity UI Toolkit.
+ * 
+ * Usage:
+ *   1. Import this USS file in your UI Document or via C#
+ *   2. Add appropriate classes to your elements:
+ *      - .win95-window (main container)
+ *      - .win95-title-bar (title bar)
+ *      - .win95-button (buttons)
+ *      - .win95-raised (raised 3D effect)
+ *      - .win95-sunken (sunken 3D effect)
+ *      etc.
+ * 
+ * C# Loading:
+ *   var styleSheet = Resources.Load<StyleSheet>("Windows95Theme");
+ *   rootVisualElement.styleSheets.Add(styleSheet);
+ */
+
+/* ============================================================================
+   CSS VARIABLES - Color Palette
+   ============================================================================ */
+
+:root {
+    /* Main Background Colors */
+    --win95-background: #C0C0C0;
+    --win95-background-dark: #808080;
+    
+    /* Title Bar Colors */
+    --win95-title-bar: #000080;
+    --win95-title-bar-inactive: #808080;
+    --win95-title-text: #FFFFFF;
+    
+    /* Border Colors for 3D Effects */
+    --win95-border-light: #FFFFFF;
+    --win95-border-mid: #DFDFDF;
+    --win95-border-dark: #808080;
+    --win95-border-darker: #000000;
+    
+    /* Button Colors */
+    --win95-button-face: #C0C0C0;
+    --win95-button-text: #000000;
+    --win95-button-highlight: #FFFFFF;
+    --win95-button-shadow: #808080;
+    
+    /* Text Colors */
+    --win95-text: #000000;
+    --win95-text-disabled: #808080;
+    --win95-text-light: #FFFFFF;
+    
+    /* Accent Colors */
+    --win95-selection: #000080;
+    --win95-selection-text: #FFFFFF;
+    
+    /* Icon Colors */
+    --win95-icon-error: #CC0000;
+    --win95-icon-warning: #E6BF00;
+    --win95-icon-info: #0066CC;
+    --win95-icon-question: #008000;
+    
+    /* Standard Sizes */
+    --win95-border-width: 2px;
+    --win95-border-width-thin: 1px;
+    --win95-title-bar-height: 22px;
+    --win95-button-height: 26px;
+    --win95-font-size: 12px;
+    --win95-padding: 6px;
+    --win95-margin: 3px;
+}
+
+/* ============================================================================
+   BASE WINDOW STYLES
+   ============================================================================ */
+
+/* Main window container */
+.win95-window {
+    background-color: var(--win95-background);
+    border-top-color: var(--win95-border-light);
+    border-left-color: var(--win95-border-light);
+    border-bottom-color: var(--win95-border-dark);
+    border-right-color: var(--win95-border-dark);
+    border-width: var(--win95-border-width);
+}
+
+/* Outer frame for double-border effect */
+.win95-window-outer {
+    background-color: var(--win95-background);
+    border-top-color: var(--win95-border-mid);
+    border-left-color: var(--win95-border-mid);
+    border-bottom-color: var(--win95-border-darker);
+    border-right-color: var(--win95-border-darker);
+    border-width: var(--win95-border-width-thin);
+}
+
+/* ============================================================================
+   TITLE BAR STYLES
+   ============================================================================ */
+
+.win95-title-bar {
+    background-color: var(--win95-title-bar);
+    height: var(--win95-title-bar-height);
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 4px;
+    padding-right: 2px;
+    margin-top: var(--win95-margin);
+    margin-left: var(--win95-margin);
+    margin-right: var(--win95-margin);
+}
+
+.win95-title-bar-inactive {
+    background-color: var(--win95-title-bar-inactive);
+}
+
+.win95-title-text {
+    color: var(--win95-title-text);
+    font-size: var(--win95-font-size);
+    -unity-font-style: bold;
+    -unity-text-align: middle-left;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.win95-title-icon {
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+    border-top-color: var(--win95-border-light);
+    border-left-color: var(--win95-border-light);
+    border-bottom-color: var(--win95-border-dark);
+    border-right-color: var(--win95-border-dark);
+    border-width: var(--win95-border-width-thin);
+}
+
+/* ============================================================================
+   3D BORDER EFFECTS
+   ============================================================================ */
+
+/* Raised effect (default button, window border) */
+.win95-raised {
+    border-top-color: var(--win95-border-light);
+    border-left-color: var(--win95-border-light);
+    border-bottom-color: var(--win95-border-dark);
+    border-right-color: var(--win95-border-dark);
+    border-width: var(--win95-border-width);
+}
+
+/* Thin raised border */
+.win95-raised-thin {
+    border-top-color: var(--win95-border-light);
+    border-left-color: var(--win95-border-light);
+    border-bottom-color: var(--win95-border-dark);
+    border-right-color: var(--win95-border-dark);
+    border-width: var(--win95-border-width-thin);
+}
+
+/* Sunken effect (text fields, inset panels) */
+.win95-sunken {
+    border-top-color: var(--win95-border-dark);
+    border-left-color: var(--win95-border-dark);
+    border-bottom-color: var(--win95-border-light);
+    border-right-color: var(--win95-border-light);
+    border-width: var(--win95-border-width);
+}
+
+/* Thin sunken border */
+.win95-sunken-thin {
+    border-top-color: var(--win95-border-dark);
+    border-left-color: var(--win95-border-dark);
+    border-bottom-color: var(--win95-border-light);
+    border-right-color: var(--win95-border-light);
+    border-width: var(--win95-border-width-thin);
+}
+
+/* Groove effect (separator lines) */
+.win95-groove {
+    border-top-color: var(--win95-border-dark);
+    border-left-color: var(--win95-border-dark);
+    border-bottom-color: var(--win95-border-light);
+    border-right-color: var(--win95-border-light);
+    border-width: var(--win95-border-width-thin);
+    height: 2px;
+}
+
+/* ============================================================================
+   BUTTON STYLES
+   ============================================================================ */
+
+.win95-button {
+    background-color: var(--win95-button-face);
+    color: var(--win95-button-text);
+    border-top-color: var(--win95-border-light);
+    border-left-color: var(--win95-border-light);
+    border-bottom-color: var(--win95-border-dark);
+    border-right-color: var(--win95-border-dark);
+    border-width: var(--win95-border-width);
+    height: var(--win95-button-height);
+    font-size: var(--win95-font-size);
+    -unity-text-align: middle-center;
+    padding: 2px 8px;
+    margin: 0;
+    border-radius: 0;
+}
+
+/* Button hover state */
+.win95-button:hover {
+    background-color: #D4D4D4;
+}
+
+/* Button pressed/active state - inverts the 3D effect */
+.win95-button:active {
+    border-top-color: var(--win95-border-dark);
+    border-left-color: var(--win95-border-dark);
+    border-bottom-color: var(--win95-border-light);
+    border-right-color: var(--win95-border-light);
+    padding: 3px 7px 1px 9px;
+}
+
+/* Disabled button */
+.win95-button:disabled {
+    color: var(--win95-text-disabled);
+    opacity: 0.7;
+}
+
+/* Small button (for close, minimize, maximize) */
+.win95-button-small {
+    width: 18px;
+    height: 16px;
+    font-size: 12px;
+    -unity-font-style: bold;
+    padding: 0;
+    margin-left: 2px;
+}
+
+/* Close button specific */
+.win95-button-close {
+    background-color: var(--win95-button-face);
+    color: var(--win95-button-text);
+}
+
+/* Default/focused button (has extra border) */
+.win95-button-default {
+    border-width: 3px;
+}
+
+/* ============================================================================
+   CONTENT AREA STYLES
+   ============================================================================ */
+
+.win95-content {
+    background-color: var(--win95-background);
+    flex-grow: 1;
+    margin: var(--win95-padding);
+    padding: 10px;
+}
+
+.win95-content-sunken {
+    background-color: var(--win95-background);
+    flex-grow: 1;
+    margin: var(--win95-padding);
+    padding: 10px;
+    border-top-color: var(--win95-border-dark);
+    border-left-color: var(--win95-border-dark);
+    border-bottom-color: var(--win95-border-light);
+    border-right-color: var(--win95-border-light);
+    border-width: var(--win95-border-width);
+}
+
+/* ============================================================================
+   LABEL STYLES
+   ============================================================================ */
+
+.win95-label {
+    color: var(--win95-text);
+    font-size: var(--win95-font-size);
+    -unity-text-align: middle-left;
+    padding: 0;
+    margin: 0;
+}
+
+.win95-label-bold {
+    -unity-font-style: bold;
+}
+
+.win95-label-title {
+    font-size: 14px;
+    -unity-font-style: bold;
+    color: var(--win95-text);
+}
+
+.win95-label-disabled {
+    color: var(--win95-text-disabled);
+}
+
+/* ============================================================================
+   TEXT INPUT STYLES
+   ============================================================================ */
+
+.win95-textfield {
+    background-color: #FFFFFF;
+    color: var(--win95-text);
+    border-top-color: var(--win95-border-dark);
+    border-left-color: var(--win95-border-dark);
+    border-bottom-color: var(--win95-border-light);
+    border-right-color: var(--win95-border-light);
+    border-width: var(--win95-border-width);
+    font-size: var(--win95-font-size);
+    padding: 2px 4px;
+    border-radius: 0;
+}
+
+.win95-textfield:focus {
+    border-top-color: var(--win95-selection);
+    border-left-color: var(--win95-selection);
+}
+
+.win95-textfield > TextInput {
+    background-color: transparent;
+    border-width: 0;
+    padding: 0;
+    margin: 0;
+}
+
+/* ============================================================================
+   SLIDER STYLES
+   ============================================================================ */
+
+.win95-slider-track {
+    background-color: var(--win95-background);
+    border-top-color: var(--win95-border-dark);
+    border-left-color: var(--win95-border-dark);
+    border-bottom-color: var(--win95-border-light);
+    border-right-color: var(--win95-border-light);
+    border-width: var(--win95-border-width);
+    height: 8px;
+}
+
+.win95-slider-fill {
+    background-color: var(--win95-selection);
+    height: 100%;
+}
+
+.win95-slider-thumb {
+    background-color: var(--win95-button-face);
+    border-top-color: var(--win95-border-light);
+    border-left-color: var(--win95-border-light);
+    border-bottom-color: var(--win95-border-dark);
+    border-right-color: var(--win95-border-dark);
+    border-width: var(--win95-border-width);
+    width: 20px;
+    height: 20px;
+    border-radius: 0;
+}
+
+.win95-slider-thumb:active {
+    border-top-color: var(--win95-border-dark);
+    border-left-color: var(--win95-border-dark);
+    border-bottom-color: var(--win95-border-light);
+    border-right-color: var(--win95-border-light);
+}
+
+/* ============================================================================
+   CHECKBOX AND TOGGLE STYLES
+   ============================================================================ */
+
+.win95-checkbox {
+    flex-direction: row;
+    align-items: center;
+}
+
+.win95-checkbox-box {
+    width: 13px;
+    height: 13px;
+    background-color: #FFFFFF;
+    border-top-color: var(--win95-border-dark);
+    border-left-color: var(--win95-border-dark);
+    border-bottom-color: var(--win95-border-light);
+    border-right-color: var(--win95-border-light);
+    border-width: var(--win95-border-width);
+    margin-right: 6px;
+}
+
+.win95-checkbox-checked {
+    background-color: var(--win95-text);
+}
+
+/* ============================================================================
+   SCROLLBAR STYLES
+   ============================================================================ */
+
+.win95-scrollbar {
+    background-color: #D4D4D4;
+    width: 16px;
+}
+
+.win95-scrollbar-thumb {
+    background-color: var(--win95-button-face);
+    border-top-color: var(--win95-border-light);
+    border-left-color: var(--win95-border-light);
+    border-bottom-color: var(--win95-border-dark);
+    border-right-color: var(--win95-border-dark);
+    border-width: var(--win95-border-width);
+    min-height: 20px;
+}
+
+.win95-scrollbar-button {
+    background-color: var(--win95-button-face);
+    border-top-color: var(--win95-border-light);
+    border-left-color: var(--win95-border-light);
+    border-bottom-color: var(--win95-border-dark);
+    border-right-color: var(--win95-border-dark);
+    border-width: var(--win95-border-width);
+    width: 16px;
+    height: 16px;
+}
+
+/* ============================================================================
+   ICON STYLES
+   ============================================================================ */
+
+.win95-icon-frame {
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    border-top-color: var(--win95-border-light);
+    border-left-color: var(--win95-border-light);
+    border-bottom-color: var(--win95-border-dark);
+    border-right-color: var(--win95-border-dark);
+    border-width: var(--win95-border-width);
+}
+
+.win95-icon-symbol {
+    font-size: 28px;
+    -unity-font-style: bold;
+    -unity-text-align: middle-center;
+}
+
+.win95-icon-error {
+    background-color: #FFCCCC;
+}
+
+.win95-icon-error > .win95-icon-symbol {
+    color: var(--win95-icon-error);
+}
+
+.win95-icon-warning {
+    background-color: #FFFFCC;
+}
+
+.win95-icon-warning > .win95-icon-symbol {
+    color: #996600;
+}
+
+.win95-icon-info {
+    background-color: #CCE5FF;
+}
+
+.win95-icon-info > .win95-icon-symbol {
+    color: var(--win95-icon-info);
+}
+
+.win95-icon-question {
+    background-color: #CCFFCC;
+}
+
+.win95-icon-question > .win95-icon-symbol {
+    color: var(--win95-icon-question);
+}
+
+/* ============================================================================
+   SEPARATOR STYLES
+   ============================================================================ */
+
+.win95-separator-horizontal {
+    height: 2px;
+    margin-left: var(--win95-padding);
+    margin-right: var(--win95-padding);
+    margin-top: 4px;
+    margin-bottom: 4px;
+    border-top-color: var(--win95-border-dark);
+    border-bottom-color: var(--win95-border-light);
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+}
+
+.win95-separator-vertical {
+    width: 2px;
+    margin-top: var(--win95-padding);
+    margin-bottom: var(--win95-padding);
+    margin-left: 4px;
+    margin-right: 4px;
+    border-left-color: var(--win95-border-dark);
+    border-right-color: var(--win95-border-light);
+    border-left-width: 1px;
+    border-right-width: 1px;
+}
+
+/* ============================================================================
+   MENU SPECIFIC STYLES
+   ============================================================================ */
+
+.win95-menu {
+    background-color: var(--win95-background);
+}
+
+.win95-menu-button {
+    background-color: var(--win95-button-face);
+    color: var(--win95-button-text);
+    height: var(--win95-button-height);
+    font-size: var(--win95-font-size);
+    -unity-text-align: middle-center;
+    border-top-color: var(--win95-border-light);
+    border-left-color: var(--win95-border-light);
+    border-bottom-color: var(--win95-border-dark);
+    border-right-color: var(--win95-border-dark);
+    border-width: var(--win95-border-width);
+    margin-top: var(--win95-padding);
+    border-radius: 0;
+}
+
+.win95-menu-button:first-child {
+    margin-top: 0;
+}
+
+.win95-menu-button:hover {
+    background-color: #D4D4D4;
+}
+
+.win95-menu-button:active {
+    border-top-color: var(--win95-border-dark);
+    border-left-color: var(--win95-border-dark);
+    border-bottom-color: var(--win95-border-light);
+    border-right-color: var(--win95-border-light);
+}
+
+.win95-menu-button:disabled {
+    color: var(--win95-text-disabled);
+}
+
+/* ============================================================================
+   POPUP SPECIFIC STYLES
+   ============================================================================ */
+
+.win95-popup {
+    background-color: var(--win95-background);
+}
+
+.win95-popup-content {
+    flex-direction: row;
+    flex-grow: 1;
+    padding: 15px;
+    align-items: flex-start;
+}
+
+.win95-popup-icon-container {
+    width: 48px;
+    height: 48px;
+    margin-right: 15px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.win95-popup-message {
+    flex-grow: 1;
+    flex-shrink: 1;
+    justify-content: center;
+}
+
+.win95-popup-message > Label {
+    font-size: var(--win95-font-size);
+    color: var(--win95-text);
+    white-space: normal;
+    -unity-text-align: middle-left;
+}
+
+.win95-popup-button-row {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.win95-popup-button {
+    width: 75px;
+    margin-left: 8px;
+}
+
+.win95-popup-button:first-child {
+    margin-left: 0;
+}
+
+/* ============================================================================
+   UTILITY CLASSES
+   ============================================================================ */
+
+/* Flexbox utilities */
+.win95-row {
+    flex-direction: row;
+}
+
+.win95-column {
+    flex-direction: column;
+}
+
+.win95-center {
+    align-items: center;
+    justify-content: center;
+}
+
+.win95-space-between {
+    justify-content: space-between;
+}
+
+.win95-flex-grow {
+    flex-grow: 1;
+}
+
+/* Visibility */
+.win95-hidden {
+    display: none;
+}
+
+/* Position */
+.win95-absolute {
+    position: absolute;
+}
+
+.win95-relative {
+    position: relative;
+}
+
+/* Dragging state */
+.win95-dragging {
+    opacity: 0.9;
+}
+
+/* ============================================================================
+   ANIMATION CLASSES (for transitions)
+   ============================================================================ */
+
+.win95-transition-opacity {
+    transition-property: opacity;
+    transition-duration: 0.15s;
+}
+
+.win95-transition-scale {
+    transition-property: scale;
+    transition-duration: 0.1s;
+}

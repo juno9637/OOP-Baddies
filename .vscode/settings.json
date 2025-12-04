@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "OOP-Baddies.sln"
+    "dotnet.defaultSolution": "Unity.sln"
 }
