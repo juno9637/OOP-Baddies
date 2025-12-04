@@ -1,8 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
-public class FightSceneManager : MonoBehaviour
+public class FightSceneManager : MonoBehaviour, IObservable
 {
     public BoxCollider2D battleAreaCollider;
     private Bounds battleBounds;
@@ -27,6 +28,8 @@ public class FightSceneManager : MonoBehaviour
     private float pageSpawnTimer = 0f;
     private bool gameWon = false;
     private bool gameLost = false;
+
+    private List<IObserver> observers = new List<IObserver>();
 
     void Start()
     {
@@ -211,10 +214,29 @@ public class FightSceneManager : MonoBehaviour
         if (pageGroup != null)
             pageGroup.DestroyAll();
 
+        Notify("Downloaded a file");
+
     }
 
     public Bounds GetBattleBounds()
     {
         return battleBounds;
     }
+
+    public void Attach(IObserver observer)
+    {
+        if (observer == null || observers.Contains(observer)) {
+            return;
+        }
+        observers.Add(observer);
+    }
+
+    public void Notify(string message)
+    {
+        foreach (IObserver observer in observers)
+            observer.OnNotify(message);
+    }
+
+
+
 }

@@ -2,14 +2,8 @@ using UnityEngine;
 
 public class CollectablePageScript : ProjectileScript
 {
-    private CharacterScript playerCharacter;
     private float lifeTime = 5f; // seconds before the page expires
     private float lifeTimer = 0f;
-
-    protected override void Start()
-    {
-        base.Start();
-    }
 
     protected override void Update()
     {

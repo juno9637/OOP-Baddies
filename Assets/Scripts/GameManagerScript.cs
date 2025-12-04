@@ -7,6 +7,7 @@ public class GameManagerScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        UIManager = gameObject.AddComponent<UIManagerScript>();        
         playGameTwo();
     }
 
@@ -17,14 +18,11 @@ public class GameManagerScript : MonoBehaviour
     }
 
     private void playGameTwo() {
-        if (UIManager == null)
-        {
-            UIManager = GetComponent<UIManagerScript>();
-            if (UIManager == null)
-            {
-                UIManager = gameObject.AddComponent<UIManagerScript>();
-            }
-        }
-        UIManager.setScene(2);
+        GameObject gameManagerObj = new GameObject("FightSceneManager");
+        FightSceneManager fightManager = gameManagerObj.AddComponent<FightSceneManager>();
+        AchievementObserver aObserver = new AchievementObserver();
+        fightManager.Attach(aObserver);
+        UIManager.UndertaleSceneSetup(fightManager);
+        UIManager.cleanup();
     }
 }

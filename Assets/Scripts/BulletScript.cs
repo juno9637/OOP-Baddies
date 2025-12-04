@@ -2,15 +2,8 @@ using UnityEngine;
 
 public class BulletScript : ProjectileScript
 {
-    private CharacterScript playerCharacter;
     private float lifeTime = 3f; // seconds before the bullet expires
     private float lifeTimer = 0f;
-
-    protected override void Start()
-    {
-        base.Start();
-        playerCharacter = FindFirstObjectByType<CharacterScript>();
-    }
 
     protected override void Update()
     {

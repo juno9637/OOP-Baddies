@@ -26,21 +26,7 @@ public class UIManagerScript : MonoBehaviour
         
     }
 
-    public void setScene(int sceneNumber)
-    {
-        cleanup();
-        switch (sceneNumber)
-        {
-            case(ESC_GAME):
-                // do stuff
-                break;
-            case(UNDERTALE_GAME):
-                UndertaleSceneSetup();
-                break;
-        }
-    }
-
-    public void UndertaleSceneSetup() {
+    public void UndertaleSceneSetup(FightSceneManager fightSceneManager) {
         Camera mainCamera = Camera.main;
         if (mainCamera == null)
         {
@@ -179,12 +165,11 @@ public class UIManagerScript : MonoBehaviour
         progressBarFillImage.type = Image.Type.Sliced;
         progressBarFillImage.color = Color.green;
 
-        GameObject gameManagerObj = new GameObject("FightSceneManager");
-        FightSceneManager fightManager = gameManagerObj.AddComponent<FightSceneManager>();
+        FightSceneManager fightManager = fightSceneManager;
         fightManager.battleAreaCollider = arenacollider;
         fightManager.bulletPrefab = bulletPrefab;
         fightManager.pagePrefab = pagePrefab;
-        pagePrefab.transform.parent = gameManagerObj.transform; // Parent to manager for organization
+        // pagePrefab.transform.parent = gameManagerObj.transform; // Parent to manager for organization
         fightManager.bulletGroup = bulletGroup;
         fightManager.pageGroup = pageGroup;
 
