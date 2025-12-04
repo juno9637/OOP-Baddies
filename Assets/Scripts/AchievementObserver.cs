@@ -13,7 +13,7 @@ public class AchievementObserver : MonoBehaviour, IObserver
 
     private void ShowPopup(string text)
     {
-        AchievementPopup popup = AchievementPopup.getInstance();
+        AchievementPopup popup = AchievementPopup.GetInstance();
         popup.ShowPopup(text);
     }
 
