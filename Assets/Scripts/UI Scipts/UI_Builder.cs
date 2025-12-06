@@ -1,23 +1,8 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 using System;
+using Random = UnityEngine.Random;
 
-/// <summary>
-/// UI_Builder - Outer Behavior Builder Pattern
-/// 
-/// This builder applies behaviors and manipulators to the ROOT element of a UI_Element.
-/// Use this for adding interactive behaviors like dragging, physics, rotation, etc.
-/// 
-/// For building the internal visual tree of a UI_Element, use the ElementBuilder
-/// provided by UI_Element's protected builder methods.
-/// 
-/// Usage:
-///     var slider = new UI_SoundSlider();
-///     new UI_Builder(slider)
-///         .Draggable()
-///         .IsScalable()
-///         .Build();
-/// </summary>
 public class UI_Builder
 {
     private readonly VisualElement element;
@@ -48,10 +33,7 @@ public class UI_Builder
     #endregion
 
     #region Behavior Methods
-
-    /// <summary>
-    /// Makes the element draggable via mouse.
-    /// </summary>
+    
     public UI_Builder Draggable()
     {
         element.AddToClassList("draggable");
@@ -59,10 +41,7 @@ public class UI_Builder
         element.AddManipulator(new DragManipulator());
         return this;
     }
-
-    /// <summary>
-    /// Makes the element bounce around the screen like a screensaver.
-    /// </summary>
+    
     public UI_Builder BouncingScreenSaver(float speedX = 2f, float speedY = 2f)
     {
         float vx = speedX;
@@ -99,10 +78,7 @@ public class UI_Builder
 
         return this;
     }
-
-    /// <summary>
-    /// Makes the element continuously rotate.
-    /// </summary>
+    
     public UI_Builder Rotate(float degreesPerSecond = 90f)
     {
         float angle = 0f;
@@ -117,14 +93,8 @@ public class UI_Builder
 
         return this;
     }
-
-    /// <summary>
-    /// Makes the element rotatable by mouse drag.
-    /// </summary>
-    public UI_Builder RotateOnMouseDown(
-        float deadzoneRadius = 30f,
-        float smoothSpeed = 10f,
-        float elementAngleOffset = 0f)
+    
+    public UI_Builder RotateOnMouseDown()
     {
         element.AddToClassList("rotatable");
         element.AddManipulator(new RotateManipulator());
@@ -137,52 +107,7 @@ public class UI_Builder
 
         return this;
     }
-
-    /// <summary>
-    /// Applies gravity physics to the element.
-    /// </summary>
-    public UI_Builder HasGravity(float gravity = 300f, bool bounce = true, float bounceDamping = 0.6f)
-    {
-        float velocityY = 0f;
-        element.style.position = Position.Absolute;
-
-        element.schedule.Execute(() =>
-        {
-            var parent = element.parent;
-            if (parent == null) return;
-
-            // Apply gravity acceleration
-            velocityY += gravity * 0.016f;
-
-            float currentY = element.style.top.value.value;
-            float newY = currentY + velocityY * 0.016f;
-
-            float bottomLimit = parent.layout.height;
-            float elemHeight = element.layout.height;
-
-            // Check if hit bottom
-            if (newY + elemHeight >= bottomLimit)
-            {
-                newY = bottomLimit - elemHeight;
-                if (bounce)
-                {
-                    velocityY = -velocityY * bounceDamping;
-                }
-                else
-                {
-                    velocityY = 0;
-                }
-            }
-
-            element.style.top = new Length(newY, LengthUnit.Pixel);
-        }).Every(16);
-
-        return this;
-    }
-
-    /// <summary>
-    /// Makes the element scalable via mouse wheel.
-    /// </summary>
+    
     public UI_Builder IsScalable(float minScale = 0.5f, float maxScale = 3f, float zoomStep = 0.1f)
     {
         element.RegisterCallback<WheelEvent>(evt =>
@@ -200,10 +125,7 @@ public class UI_Builder
 
         return this;
     }
-
-    /// <summary>
-    /// Adds quit application behavior on click.
-    /// </summary>
+    
     public UI_Builder QuitCondition()
     {
         if (element is Button button)
@@ -217,10 +139,7 @@ public class UI_Builder
 
         return this;
     }
-
-    /// <summary>
-    /// Sets the initial position of the element.
-    /// </summary>
+    
     public UI_Builder SetInitialPosition(float left, float top)
     {
         element.style.position = Position.Absolute;
@@ -228,10 +147,15 @@ public class UI_Builder
         element.style.top = top;
         return this;
     }
-
-    /// <summary>
-    /// Adds a click callback to the element.
-    /// </summary>
+    
+    public UI_Builder SetRandomInitialPosition()
+    {
+        element.style.position = Position.Absolute;
+        element.style.left = Random.Range(10, 350);
+        element.style.top = Random.Range(10, 350);;
+        return this;
+    }
+    
     public UI_Builder OnClick(Action callback)
     {
         if (element is Button button)
@@ -249,18 +173,12 @@ public class UI_Builder
     #endregion
 
     #region Build
-
-    /// <summary>
-    /// Finalizes the builder and returns the UI_Element (if available).
-    /// </summary>
+    
     public UI_Element BuildElement()
     {
         return uiElement;
     }
-
-    /// <summary>
-    /// Finalizes the builder and returns the VisualElement.
-    /// </summary>
+    
     public VisualElement Build()
     {
         return element;

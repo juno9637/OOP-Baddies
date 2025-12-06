@@ -1,15 +1,8 @@
 using System;
 using UnityEngine;
 
-public enum UI_Type
-{
-    Slider,
-    Menu,
-    Button,
-    Popup
-}
 
-public class UI_Factory : MonoBehaviour
+public class UI_Factory
 {
     public UI_Factory()
     {

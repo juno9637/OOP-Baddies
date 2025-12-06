@@ -78,6 +78,8 @@ public abstract class UI_Element
     public abstract void SetButtonCallback(int index, Action callback);
 
     public abstract void SetClosedCallback(Action callback);
+    
+    public abstract void SetText(string text);
 
     #endregion
 

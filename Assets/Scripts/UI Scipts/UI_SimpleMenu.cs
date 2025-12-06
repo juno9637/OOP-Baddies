@@ -130,6 +130,11 @@ public class UI_SimpleMenu : UI_Element
         onCloseCallback = callback;
     }
 
+    public override void SetText(string text)
+    {
+        titleLabel.text = text;
+    }
+
     #endregion
 
     #region Visual Tree Construction

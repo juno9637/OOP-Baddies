@@ -109,6 +109,11 @@ public class UI_SimplePopUp : UI_Element
 
     }
 
+    public override void SetText(string text)
+    {
+        SetButtonText(1, text);
+    }
+
     protected override void UpdateVisuals()
     {
         // No dynamic updates needed
@@ -422,40 +427,13 @@ public class UI_SimplePopUp : UI_Element
 
     #region GetSet
     
-    public void SetButtonText(int index, string text)
+    private void SetButtonText(int index, string text)
     {
         if (index >= 0 && index < buttons.Count)
         {
             buttons[index].text = text;
         }
     }
-    
-    public Button GetButton(int index)
-    {
-        if (index >= 0 && index < buttons.Count)
-        {
-            return buttons[index];
-        }
-        return null;
-    }
-    
-    public void SetPopupMessage(string newMessage)
-    {
-        if (messageLabel != null)
-        {
-            messageLabel.text = newMessage;
-        }
-    }
-    
-    public void SetTitle(string newTitle)
-    {
-        if (titleLabel != null)
-        {
-            titleLabel.text = newTitle;
-        }
-    }
-    
-
 
     #endregion
 }

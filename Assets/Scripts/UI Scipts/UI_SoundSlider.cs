@@ -42,6 +42,7 @@ public class UI_SoundSlider : UI_Element
     
     //Event
     private Action<float> onValueChanged;
+    private Action onClosedCallback;
 
     //Visual Elements
     private Label titleLabel;
@@ -161,12 +162,17 @@ public class UI_SoundSlider : UI_Element
 
     public override void SetClosedCallback(Action callback)
     {
-        throw new NotImplementedException();
+        onClosedCallback = callback;
     }
 
     public override void SetButtonCallback(int index, Action callback)
     {
         throw new NotImplementedException();
+    }
+
+    public override void SetText(string text)
+    {
+        titleLabel.text = text;
     }
 
     #endregion
@@ -210,6 +216,8 @@ public class UI_SoundSlider : UI_Element
         
         UpdateValueFromRotation();
         
+        if(currentValue >= .999) onClosedCallback?.Invoke();
+        
         evt.StopPropagation();
     }
 
@@ -243,7 +251,7 @@ public class UI_SoundSlider : UI_Element
     {
         if (!isDragging) return;
         
-        if(!fillByRotate){UpdateValueFromMousePosition(evt.mousePosition);}
+        UpdateValueFromMousePosition(evt.mousePosition);
         
         evt.StopPropagation();
     }
@@ -280,7 +288,7 @@ public class UI_SoundSlider : UI_Element
     {
         Vector2 trackWorldPosition = sliderTrack.worldBound.position;
         float relativeX = mousePosition.x - trackWorldPosition.x;
-        relativeX = Mathf.Clamp(relativeX, 0, trackWidth);
+        relativeX = Mathf.Clamp(relativeX, 0, trackWidth - 10);
 
         float updateValue = relativeX / trackWidth;
         UpdateSetFillValue(updateValue);
@@ -288,15 +296,14 @@ public class UI_SoundSlider : UI_Element
 
     private void UpdateValueFromRotation()
     {
-        float rotation = rootVisualElement.resolvedStyle.rotate.angle.value; //% 360
-        rotation = (rotation % 360f + 360f) % 360f;
+        float rotation = rootVisualElement.resolvedStyle.rotate.angle.value % 180;
+        //rotation = (rotation % 360f + 360f) % 360f;
         
         float radians = rotation * Mathf.Deg2Rad;
         float gravityT = 0.5f * (1f - Mathf.Cos(radians));
         
-        float relativeFill = gravityT * trackWidth;
+        float relativeFill = gravityT * trackWidth * .01f;
         
-        Debug.Log($"Fill: {relativeFill}");
         UpdateSetFillValue(relativeFill);
     }
 
