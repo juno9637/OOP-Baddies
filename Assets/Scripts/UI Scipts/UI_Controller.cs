@@ -45,7 +45,6 @@ public class UI_Controller : MonoBehaviour
         switch (level)
         {
             case 1:
-                CreateUI(UI_Type.Menu);
                 break;
             case 2:
                 CreateUI(UI_Type.SpamPopup);
@@ -150,10 +149,5 @@ public class UI_Controller : MonoBehaviour
                     .Build();
                 break;
         }
-    }
-
-    void DestroyUI(UI_Element element)
-    {
-        element.Destroy();
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class ClickCounter : ObservableBase
 {
@@ -33,6 +34,7 @@ public class CloseButtonTracker : ObservableBase
 public class LevelManager : MonoBehaviour, IObserver
 {
     [SerializeField] private UI_Controller uiController;
+    [SerializeField] private GameObject _uiDoc;
     
     private int currentLevel = 0;
     private int maxLevel = 4;
@@ -89,8 +91,23 @@ public class LevelManager : MonoBehaviour, IObserver
     {
         if (msg == CloseButtonTracker.MSG_CLOSED)
         {
-            NextLevel();
+            if (currentLevel == 1)
+            {
+                WipeSceneButKeep(_uiDoc);
+            }
+
+        NextLevel();
         }
     }
     
+    void WipeSceneButKeep(GameObject keep)
+    {
+        foreach (GameObject go in GameObject.FindObjectsOfType<GameObject>())
+        {
+            if (go == this.gameObject) return;
+            
+            if(go != keep)
+                Destroy(go);
+        }
+    }
 }
