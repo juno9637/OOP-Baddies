@@ -1,24 +1,7 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-
-public class ClickCounter : ObservableBase
-{
-    public const string MSG_COUNT = "COUNT";
-    
-    private int count;
-    
-    public int Count => count;
-    
-    public void Increment()
-    {
-        Debug.Log("Increment");
-        count++;
-        Notify($"{MSG_COUNT}:{count}");
-    }
-    
-    public void Reset() => count = 0;
-}
 
 public class CloseButtonTracker : ObservableBase
 {
@@ -34,7 +17,7 @@ public class CloseButtonTracker : ObservableBase
 public class LevelManager : MonoBehaviour, IObserver
 {
     [SerializeField] private UI_Controller uiController;
-    [SerializeField] private GameObject _uiDoc;
+    [SerializeField] private List<GameObject> permanentObjects;
     
     private int currentLevel = 0;
     private int maxLevel = 4;
@@ -93,21 +76,22 @@ public class LevelManager : MonoBehaviour, IObserver
         {
             if (currentLevel == 1)
             {
-                WipeSceneButKeep(_uiDoc);
+                ClearSceneExcept(permanentObjects);
             }
 
         NextLevel();
         }
     }
     
-    void WipeSceneButKeep(GameObject keep)
+    void ClearSceneExcept(List<GameObject> permanentObjects)
     {
-        foreach (GameObject go in GameObject.FindObjectsOfType<GameObject>())
+        foreach (GameObject remove in GameObject.FindObjectsOfType<GameObject>())
         {
-            if (go == this.gameObject) return;
+            if (remove == this.gameObject)
+                continue;
             
-            if(go != keep)
-                Destroy(go);
+            if (!permanentObjects.Contains(remove))
+                Destroy(remove);
         }
     }
 }

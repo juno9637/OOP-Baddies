@@ -58,14 +58,12 @@ public class UI_Builder
             float newX = currentX + vx;
             float newY = currentY + vy;
 
-            // Check horizontal bounds
             if (newX < 0 || newX + element.layout.width > parent.layout.width)
             {
                 vx = -vx;
                 newX = Mathf.Clamp(newX, 0, Mathf.Max(0, parent.layout.width - element.layout.width));
             }
-
-            // Check vertical bounds
+            
             if (newY < 0 || newY + element.layout.height > parent.layout.height)
             {
                 vy = -vy;
@@ -74,7 +72,7 @@ public class UI_Builder
 
             element.style.left = new Length(newX, LengthUnit.Pixel);
             element.style.top = new Length(newY, LengthUnit.Pixel);
-        }).Every(16); // ~60 FPS
+        }).Every(16);
 
         return this;
     }
@@ -126,20 +124,6 @@ public class UI_Builder
         return this;
     }
     
-    public UI_Builder QuitCondition()
-    {
-        if (element is Button button)
-        {
-            button.clicked += QuitApplication;
-        }
-        else
-        {
-            element.AddManipulator(new Clickable(QuitApplication));
-        }
-
-        return this;
-    }
-    
     public UI_Builder SetInitialPosition(float left, float top)
     {
         element.style.position = Position.Absolute;
@@ -185,20 +169,7 @@ public class UI_Builder
     }
 
     #endregion
-
-    #region Private Helpers
-
-    private void QuitApplication()
-    {
-#if UNITY_EDITOR
-        Debug.Log("Quit pressed (would quit in build)");
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-    }
-
-    #endregion
+    
 }
 
 #region Manipulators

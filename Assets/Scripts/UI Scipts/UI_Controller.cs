@@ -10,7 +10,8 @@ public enum UI_Type
     Menu,
     ErrorMenu,
     SpamPopup,
-    UnclosingPopup
+    UnclosingPopup,
+    VictoryPopup
 }
 
 public class UI_Controller : MonoBehaviour
@@ -25,15 +26,14 @@ public class UI_Controller : MonoBehaviour
     private UI_Element settingsMenu;
     private UI_Element SpamPopup;
     private UI_Element UnclosingPopup;
+    private UI_Element VictoryPopup;
     
     private UI_Factory factory = new UI_Factory();
     
-    private ClickCounter clickCounter = new ClickCounter();
     private CloseButtonTracker closeTracker = new CloseButtonTracker();
 
     void OnEnable()
     {
-        clickCounter.Attach(levelManager);
         closeTracker.Attach(levelManager);
         
         uiDocument = GetComponent<UIDocument>();
@@ -59,7 +59,7 @@ public class UI_Controller : MonoBehaviour
                 }
                 break;
             case 4:
-                //SetupLevel4();
+                CreateUI(UI_Type.VictoryPopup);
                 break;
         }
     }
@@ -120,7 +120,6 @@ public class UI_Controller : MonoBehaviour
                     buttonLabels: new[] { "Yes", "No" });
         
                 UnclosingPopup.SetButtonCallback(0, () => closeTracker.OnClosePressed());
-                Debug.Log("Gay");
                 UnclosingPopup.SetButtonCallback(1, () => UnclosingPopup.SetText("Error"));
                 UnclosingPopup.SetClosedCallback(() => { 
                     UnclosingPopup.Hide();
@@ -134,6 +133,25 @@ public class UI_Controller : MonoBehaviour
                     .SetRandomInitialPosition()
                     .Build();
                 break;
+            case UI_Type.VictoryPopup:
+                VictoryPopup = factory.CreatePopup("Fine You Win, You can Quit Now",
+                    "Are you sure you want to quit the game?", ":(", Color.mediumPurple,
+                    buttonLabels: new[] { "Quit" });
+        
+                VictoryPopup.SetButtonCallback(0, () => UnityEditor.EditorApplication.isPlaying = false);
+                VictoryPopup.SetClosedCallback(() => { 
+                    VictoryPopup.Hide();
+                    CreateUI(UI_Type.VictoryPopup); 
+                });
+        
+                root.Add(VictoryPopup.GetRootVisualElement());
+        
+                new UI_Builder(VictoryPopup)
+                    .Draggable()
+                    .SetRandomInitialPosition()
+                    .Build();
+                break;
+            
             case UI_Type.ErrorMenu:
                 settingsMenu = factory.CreateMenu("Settings", 1, new string[] { "Quit?" });
                 
